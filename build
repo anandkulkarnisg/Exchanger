@@ -5,3 +5,7 @@ g++ -I ../CyclicBarrier/ -g -std=c++17 -fPIC -shared Exchanger.o -o libExchanger
 
 g++ -I ../CyclicBarrier/ -g -std=c++17 Example1.cpp -o Example1.out -L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger
 g++ -I ../CyclicBarrier/ -g -std=c++17 Example2.cpp -o Example2.out -L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger
+g++ -I ../CyclicBarrier/ -g -std=c++17 Example3.cpp -o Example3.out -L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger
+g++ -I ../CyclicBarrier/ -g -std=c++17 Example4.cpp -o Example4.out -L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger
+
+rm -f *.o
