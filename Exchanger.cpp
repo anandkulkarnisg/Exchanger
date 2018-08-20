@@ -107,7 +107,16 @@ template<typename T> T Exchanger<T>::exchange(const T& inputItem, const long& wa
 
 template<typename T> void Exchanger<T>::reset()
 {
-	m_barrierPtr->reset();
+	try
+	{
+		m_barrierPtr->reset();
+	}
+	catch(const std::exception& e)
+	{
+		// This can happen if the barrier is already active and somebody tries to reset it. Currently for Exchanger we dont need to do anything for this.	
+	}
+	m_item1Status.store(false, std::memory_order_seq_cst);
+	m_item2Status.store(false, std::memory_order_seq_cst);
 }
 
 template<typename T> void Exchanger<T>::show()

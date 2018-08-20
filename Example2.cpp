@@ -29,21 +29,14 @@ void resetExchanger()
 	{
 		std::unique_lock<std::mutex> lock(sync_mutex);
 		m_cond.wait(lock, []() { return(syncStatus == 0); });
-		try
-		{
-			exchanger.reset();
-		}
-		catch(const std::exception& e)
-		{
-			std::cout << "Caught exception with status = " << e.what() << std::endl;
-		}
+		exchanger.reset();
 		syncStatus.store(2, std::memory_order_seq_cst);
 		lock.unlock();
 	}
 	stopResetStatus=true;
 }
 
-void testExchanger(const std::string& inputString)
+void testExchanger(std::string inputString)
 {
 	printOut("I am currently running from thread id =", ".The value i am having initially is = "+inputString, std::this_thread::get_id());
 	std::string returnString;
@@ -55,15 +48,16 @@ void testExchanger(const std::string& inputString)
 		while(syncStatus != 2) { m_cond.notify_all();  }
 		try
 		{
-			returnString = exchanger.exchange(inputString);
+			returnString = exchanger.exchange(inputString);			
 		}
 		catch(const std::exception& e)
 		{
 			std::cout << e.what() << std::endl;
 		}
+		printOut("I am currently running from thread id =", ".The value i am having now is = " + returnString, std::this_thread::get_id());
+		inputString = returnString;
 		syncStatus.fetch_sub(1, std::memory_order_seq_cst);
 		m_cond.notify_all();
-		printOut(std::to_string(i) + " .I am currently running from thread id =", ".The value i am having now is = " + returnString, std::this_thread::get_id());
 		++i;
 	}
 }
