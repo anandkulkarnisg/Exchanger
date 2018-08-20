@@ -14,7 +14,7 @@ std::mutex sync_mutex;
 std::atomic<int> syncStatus;
 std::condition_variable m_cond;
 std::atomic<bool> processingStatus;
-bool stopResetStatus = false;
+const long runDemoLoop = 10000;
 
 void printOut(const std::string& str1, const std::string& str2, const std::thread::id& id)
 {
@@ -33,7 +33,6 @@ void resetExchanger()
 		syncStatus.store(2, std::memory_order_seq_cst);
 		lock.unlock();
 	}
-	stopResetStatus=true;
 }
 
 void testExchanger(std::string inputString)
@@ -42,8 +41,7 @@ void testExchanger(std::string inputString)
 	std::string returnString;
 	int i=0;
 
-	// This has a dead lock situation! between lines of shared_lock and exclusive lock.
-	while(i<1000)
+	while(i<runDemoLoop)
 	{
 		while(syncStatus != 2) { m_cond.notify_all();  }
 		try
@@ -76,7 +74,10 @@ int main(int argc, char* argv[])
 	t1.join();
 	t2.join();		
 	processingStatus.store(false, std::memory_order_seq_cst);
-	syncStatus.store(0, std::memory_order_seq_cst); 
+	if(syncStatus != 0)
+	{
+		syncStatus.store(0, std::memory_order_seq_cst); 
+	}
 	m_cond.notify_all(); 
 	t3.join();
 
