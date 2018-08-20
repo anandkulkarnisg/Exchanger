@@ -1,0 +1,7 @@
+#!/bin/bash
+
+g++ -I ../CyclicBarrier/ -c -g -std=c++17 -fPIC Exchanger.cpp
+g++ -I ../CyclicBarrier/ -g -std=c++17 -fPIC -shared Exchanger.o -o libExchanger.so
+
+g++ -I ../CyclicBarrier/ -g -std=c++17 Example1.cpp -o Example1.out -L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger
+g++ -I ../CyclicBarrier/ -g -std=c++17 Example2.cpp -o Example2.out -L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger
