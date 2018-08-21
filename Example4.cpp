@@ -39,7 +39,7 @@ void testExchanger(const std::string& inputString)
 	}
 	catch(const std::exception& e)
 	{
-		std::cout << "Recieved the exception = " << e.what() << std::endl;
+		printOut("Recieved the exception in thread id = ", ". Exception Message is = " + std::string(e.what()), std::this_thread::get_id());
 		isExceptionState = true;
 	}
 	if(!isExceptionState)
