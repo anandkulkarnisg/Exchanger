@@ -12,7 +12,6 @@ template<typename T> class Exchanger : private boost::noncopyable
 {
 	private:
 		std::unique_ptr<CyclicBarrier> m_barrierPtr;						// We attempt to use a Cycic Barrier to implement an Exchanger item.
-		std::unique_ptr<std::once_flag> m_onceFlag;							// We use once flag to execute only one time once the barrier is tripped.
 		T m_item1;															// First item of Exchanger.
 		T m_item2;															// Second item of Exchanger.
 		std::atomic<bool> m_item1Status;									// status of set/unset for First Item.
@@ -23,7 +22,7 @@ template<typename T> class Exchanger : private boost::noncopyable
 		T exchange(const T&);												// Returns the exchanged item.
 		T exchange(const T&, const long&);									// Implement a exchange with timeout and exception mechanism.
 		void show();														// Dump the status.
-		void reset();
+		void reset();														// This function is critical as it resets the status of the embedded CyclicBarrier.
 };
 
 #endif

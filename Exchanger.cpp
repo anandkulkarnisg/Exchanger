@@ -9,7 +9,6 @@ using namespace std;
 template<typename T> Exchanger<T>::Exchanger()
 {
 	m_barrierPtr.reset(new CyclicBarrier(2));		// We need a barrier of 2 for exchanger.
-	m_onceFlag.reset(new std::once_flag);			// Get a new std::once flag.		
 	m_item1Status.store(false, std::memory_order_seq_cst);
 	m_item2Status.store(false, std::memory_order_seq_cst);
 }

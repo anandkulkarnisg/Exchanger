@@ -1,11 +1,17 @@
 #!/bin/bash
 
+# First build the shared library for the exchanger.
 g++ -I ../CyclicBarrier/ -c -g -std=c++17 -fPIC Exchanger.cpp
 g++ -I ../CyclicBarrier/ -g -std=c++17 -fPIC -shared Exchanger.o -o libExchanger.so
 
-g++ -I ../CyclicBarrier/ -g -std=c++17 Example1.cpp -o Example1.out -L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger
-g++ -I ../CyclicBarrier/ -g -std=c++17 Example2.cpp -o Example2.out -L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger
-g++ -I ../CyclicBarrier/ -g -std=c++17 Example3.cpp -o Example3.out -L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger
-g++ -I ../CyclicBarrier/ -g -std=c++17 Example4.cpp -o Example4.out -L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger
+# Now build the Examples.
 
+linkerFlags="-L ../CyclicBarrier -lpthread -lCyclicBarrier -lPocoFoundation -L. -lExchanger"
+
+for fileItem in $(ls Example*.cpp)
+do
+	g++ -I ../CyclicBarrier/ -g -std=c++17 $fileItem -o ${fileItem%.cpp}.out $linkerFlags
+done
+
+# Remove object files at the end. 
 rm -f *.o
