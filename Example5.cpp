@@ -1,8 +1,6 @@
 #include<iostream>
 #include<string>
 #include<thread>
-#include<mutex>
-#include<shared_mutex>
 
 #include "Exchanger.h"
 
@@ -19,7 +17,7 @@ void printOut(const std::string& str1, const std::string& str2, const std::threa
 	lock.unlock();
 }
 
-void testExchanger(std::string inputString, bool resetStatus)
+void testExchanger(std::string inputString)
 {
 	printOut("I am currently running from thread id =", ".The value i am having initially is = "+inputString, std::this_thread::get_id());
 	std::string returnString;
@@ -37,8 +35,6 @@ void testExchanger(std::string inputString, bool resetStatus)
 		}
 		printOut("I am currently running from thread id =", ".The value i am having now is = " + returnString, std::this_thread::get_id());
 		inputString = returnString;
-		if(resetStatus)
-			exchanger.reset();
 		++i;
 	}
 }
@@ -51,8 +47,8 @@ int main(int argc, char* argv[])
 	std::string firstString = "First Thread";
 	std::string secondString = "Second Thread";
 
-	std::thread t1(&testExchanger, firstString, true);
-	std::thread t2(&testExchanger, secondString, false);
+	std::thread t1(&testExchanger, firstString);
+	std::thread t2(&testExchanger, secondString);
 
 	t1.join();
 	t2.join();		

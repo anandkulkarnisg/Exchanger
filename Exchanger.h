@@ -3,7 +3,8 @@
 #include<memory>
 #include<mutex>
 #include<thread>
-#include<CyclicBarrier.h>
+#include<FlexBarrier.h>
+#include<boost/core/noncopyable.hpp>
 
 #ifndef Exchanger_H
 #define Exchanger_H
@@ -11,18 +12,15 @@
 template<typename T> class Exchanger : private boost::noncopyable
 {
 	private:
-		std::unique_ptr<CyclicBarrier> m_barrierPtr;						// We attempt to use a Cycic Barrier to implement an Exchanger item.
+		std::unique_ptr<FlexBarrier> m_preBarrierPtr;						// We attempt to use a Flex Barrier to implement an Exchanger item.
+		std::unique_ptr<FlexBarrier> m_postBarrierPtr;						// We attempt to use a pair of pre and post barriers to sync up exchanging threads [ Always 2 of them ].
 		T m_item1;															// First item of Exchanger.
 		T m_item2;															// Second item of Exchanger.
-		std::atomic<bool> m_item1Status;									// status of set/unset for First Item.
-		std::atomic<bool> m_item2Status;									// status of set/unset for the Second Item.
 
 	public:
 		Exchanger();														// Default Constructor.
 		T exchange(const T&);												// Returns the exchanged item.
 		T exchange(const T&, const long&);									// Implement a exchange with timeout and exception mechanism.
-		void show();														// Dump the status.
-		void reset();														// This function is critical as it resets the status of the embedded CyclicBarrier.
 };
 
 #endif

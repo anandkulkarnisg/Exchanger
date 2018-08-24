@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 	std::thread t2(&testExchanger, secondString);
 
 	t1.join();
-	t2.join();		
+	t2.join();
 
 	return(0);
 }

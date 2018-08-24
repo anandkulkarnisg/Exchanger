@@ -33,7 +33,7 @@ void testExchanger(const std::string& inputString)
 		else
 		{
 			printOut("I am currently running from thread id = ", ".I am going to wait for before attempting exchange" + std::to_string(waitMilliSecs), std::this_thread::get_id());
-			std::this_thread::sleep_for(std::chrono::milliseconds(waitMilliSecs));
+			std::this_thread::sleep_for(std::chrono::milliseconds(waitMilliSecs-1));
 			returnString = exchanger.exchange(inputString);
 		}
 	}
