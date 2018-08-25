@@ -33,7 +33,8 @@ void testExchanger(const std::string& inputString)
 		else
 		{
 			printOut("I am currently running from thread id = ", ".I am going to wait for before attempting exchange" + std::to_string(waitMilliSecs), std::this_thread::get_id());
-			std::this_thread::sleep_for(std::chrono::milliseconds(waitMilliSecs-1));
+			// This hit about 50 micro seconds earlier than the other Second Thread is about to time out waiting. It makes it sometimes and doesnt sometimes!
+			std::this_thread::sleep_for(std::chrono::microseconds((waitMilliSecs*1000)-50));
 			returnString = exchanger.exchange(inputString);
 		}
 	}

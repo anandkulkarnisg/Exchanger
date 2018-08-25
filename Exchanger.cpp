@@ -89,4 +89,12 @@ template<typename T> T Exchanger<T>::exchange(const T& inputItem, const long& wa
 		return(m_item1);
 }
 
+template<typename T> void Exchanger<T>::reset()
+{
+	if(m_preBarrierPtr->isBroken())
+		m_preBarrierPtr->reset();
+	if(m_postBarrierPtr->isBroken())
+		m_postBarrierPtr->reset();	
+}
+
 template class Exchanger<std::string>;

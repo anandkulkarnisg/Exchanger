@@ -21,6 +21,7 @@ template<typename T> class Exchanger : private boost::noncopyable
 		Exchanger();														// Default Constructor.
 		T exchange(const T&);												// Returns the exchanged item.
 		T exchange(const T&, const long&);									// Implement a exchange with timeout and exception mechanism.
+		void reset();														// The barriers can go broken due to timeouts. Hence need a reset interface.
 };
 
 #endif

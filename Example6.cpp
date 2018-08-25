@@ -32,8 +32,8 @@ void producerThread(const std::vector<std::string>& dataSource)
 		catch(const std::exception& e)
 		{
 			std::cout << e.what() << std::endl;
+			exchanger.reset();
 		}
-		//printOut("I am producer thread currently running from thread id =", ".The value i am having now is = " + returnString, std::this_thread::get_id());
 		++i;
 	}
 }
@@ -44,20 +44,24 @@ void consumerThread()
 	printOut("I am consumer thread currently running from thread id =", "",  std::this_thread::get_id());
 	std::string returnString;
 	int i=0;
+	int badMessageCount=0;
 
 	while(i<runDemoLoop)
 	{
 		try
 		{
-			returnString = exchanger.exchange("");           
+			returnString = exchanger.exchange("", 50);           
 		}
 		catch(const std::exception& e)
 		{
 			std::cout << e.what() << std::endl;
+			exchanger.reset();
+			++badMessageCount;
 		}
 		printOut("I am consumer thread currently running from thread id =", ".The value i am having now is = " + returnString, std::this_thread::get_id());
 		++i;
 	}
+	printOut("The consumer thread running from thread id = ", "recieved/missed in total " + std::to_string(badMessageCount) +" number of bad messages",std::this_thread::get_id());
 }
 
 
