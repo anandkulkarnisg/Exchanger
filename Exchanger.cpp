@@ -35,7 +35,7 @@ template<typename T> T Exchanger<T>::exchange(const T& inputItem)
 	// We sync up again using post exchange barrier.
 	try
 	{
-		int postbarrierCount = m_postBarrierPtr->await();
+		m_postBarrierPtr->await();
 	}
 	catch(const std::exception& e)
 	{
@@ -74,7 +74,7 @@ template<typename T> T Exchanger<T>::exchange(const T& inputItem, const long& wa
 	// We sync up again using post exchange barrier. Note this one does not need to wait. This needs to sync immediately.
 	try
 	{   
-		int postbarrierCount = m_postBarrierPtr->await();
+		m_postBarrierPtr->await();
 	}
 	catch(const std::exception& e)
 	{
