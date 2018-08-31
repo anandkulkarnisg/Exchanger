@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string>
 #include<thread>
+#include<vector>
 
 #include "Exchanger.h"
 
@@ -61,7 +62,7 @@ void consumerThread()
 		printOut("I am consumer thread currently running from thread id =", ".The value i am having now is = " + returnString, std::this_thread::get_id());
 		++i;
 	}
-	printOut("The consumer thread running from thread id = ", "recieved/missed in total " + std::to_string(badMessageCount) +" number of bad messages",std::this_thread::get_id());
+	printOut("The consumer thread running from thread id = ", ".Recieved/missed in total " + std::to_string(badMessageCount) +" number of bad messages",std::this_thread::get_id());
 }
 
 
