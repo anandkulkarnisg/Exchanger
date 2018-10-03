@@ -51,13 +51,13 @@ template<typename T> T Exchanger<T>::exchange(const T& inputItem)
 }
 
 // Implement exchange mechanism through a timeout feature.
-template<typename T> T Exchanger<T>::exchange(const T& inputItem, const long& waitTime)
+template<typename T> T Exchanger<T>::exchange(const T& inputItem, const long& waitTime, const TimeUnit& timeUnit)
 {
 	// First we wait for the barrier and wont break out till the barrier breaks.
 	int barrierCount;
 	try
 	{   
-		barrierCount = m_preBarrierPtr->await(waitTime);
+		barrierCount = m_preBarrierPtr->await(waitTime,timeUnit);
 	}
 	catch(const std::exception& e)
 	{

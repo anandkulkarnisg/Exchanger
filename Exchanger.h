@@ -6,6 +6,8 @@
 #include<CyclicBarrier.h>
 #include<boost/core/noncopyable.hpp>
 
+#include "TimeUtils.h"
+
 #ifndef Exchanger_H
 #define Exchanger_H
 
@@ -20,7 +22,7 @@ template<typename T> class Exchanger : private boost::noncopyable
 	public:
 		Exchanger();														// Default Constructor.
 		T exchange(const T&);												// Returns the exchanged item.
-		T exchange(const T&, const long&);									// Implement a exchange with timeout and exception mechanism.
+		T exchange(const T&, const long&, const TimeUnit& = TimeUnit::MilliSeconds); // Implement a exchange with timeout and exception mechanism.
 		void reset();														// The barriers can go broken due to timeouts. Hence need a reset interface.
 };
 

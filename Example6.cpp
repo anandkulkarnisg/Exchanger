@@ -51,7 +51,7 @@ void consumerThread()
 	{
 		try
 		{
-			returnString = exchanger.exchange("", 50);           
+			returnString = exchanger.exchange("", 50, TimeUnit::MilliSeconds);           
 		}
 		catch(const std::exception& e)
 		{

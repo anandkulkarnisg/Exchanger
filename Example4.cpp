@@ -28,7 +28,7 @@ void testExchanger(const std::string& inputString)
 		if(inputString == "Second Thread")
 		{
 			printOut("I am currently running from thread id = ", ".I am going to exchange with wait for =  " + std::to_string(waitMilliSecs), std::this_thread::get_id());
-			returnString = exchanger.exchange(inputString, waitMilliSecs);
+			returnString = exchanger.exchange(inputString, waitMilliSecs, TimeUnit::MilliSeconds);
 		}
 		else
 		{
