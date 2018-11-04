@@ -4,7 +4,7 @@ project(Exchanger)
 include_directories(../CyclicBarrier)
 link_directories("$ENV{HOME}/git/CyclicBarrier")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -g -Wall")
 
 # Generate shared library libCyclicBarrier.so file.
 ADD_LIBRARY(Exchanger SHARED Exchanger.cpp)
