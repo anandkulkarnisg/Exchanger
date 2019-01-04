@@ -19,7 +19,7 @@ void printOut(const std::string& str1, const std::string& str2, const std::threa
 
 void testExchanger(std::string inputString)
 {
-	printOut("I am currently running from thread id =", ".The value i am having initially is = "+inputString, std::this_thread::get_id());
+	printOut("I am currently running from thread id =", ".The value i am having initially is = " + inputString, std::this_thread::get_id());
 	std::string returnString;
 	int i=0;
 
@@ -38,9 +38,6 @@ void testExchanger(std::string inputString)
 		++i;
 	}
 }
-
-// CRITICAL NOTE : This is a still in work desired example. It does not work but i am trying to make it work. The aim is to somehow achieve the reset happen on exchanger while the other thread gets blocked
-// at exchange method. I am not able to do it at the moment. Example2.cpp is a clumsy but working implementation which uses a bit of spinning to avoid the issue of synchronization.
 
 int main(int argc, char* argv[])
 {
