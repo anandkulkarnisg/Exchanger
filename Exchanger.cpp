@@ -8,8 +8,8 @@ using namespace std;
 // First implement the Constructor for the Exchanger.
 template<typename T> Exchanger<T>::Exchanger()
 {
-	m_preBarrierPtr.reset(new CyclicBarrier(2));			// We need a barrier of 2 for exchanger.
-	m_postBarrierPtr.reset(new CyclicBarrier(2));			// We need two barriers to sync up the threads.
+	m_preBarrierPtr=make_unique<CyclicBarrier>(2);			// We need a barrier of 2 for exchanger.
+	m_postBarrierPtr=make_unique<CyclicBarrier>(2);			// We need two barriers to sync up the threads.
 }
 
 // Implement a exchange function without wait feature.
